@@ -46,10 +46,23 @@ async function resumeEnv() {
   }
 }
 
-// Testes imediatos
-resumeEnv(); // Retoma agora
-pauseEnv();  // Depois, pausa
+// Execução manual para testes (isso será removido depois)
+(async () => {
+  console.log("🔄 Iniciando teste manual de retomada...");
+  try {
+    await resumeEnv();
+  } catch (err) {
+    console.error("❌ Erro ao retomar ambiente:", err);
+  }
 
-// ⏰ Agendamentos: pausa às 23h, retoma às 8h
+  console.log("🔄 Iniciando teste manual de pausa...");
+  try {
+    await pauseEnv();
+  } catch (err) {
+    console.error("❌ Erro ao pausar ambiente:", err);
+  }
+})();
+
+// Agendamentos normais mantidos para produção
 cron.schedule('0 23 * * *', pauseEnv);
 cron.schedule('0 8 * * *', resumeEnv);
