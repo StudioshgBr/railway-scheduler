@@ -46,6 +46,10 @@ async function resumeEnv() {
   }
 }
 
+// Testes imediatos
+resumeEnv(); // Retoma agora
+pauseEnv();  // Depois, pausa
+
 // ⏰ Agendamentos: pausa às 23h, retoma às 8h
 cron.schedule('0 23 * * *', pauseEnv);
 cron.schedule('0 8 * * *', resumeEnv);
