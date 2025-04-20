@@ -12,37 +12,35 @@ const headers = {
 
 async function pauseEnv() {
   try {
-    await axios.post('https://backboard.railway.app/graphql/v2', {
-      query: `
-        mutation {
-          environmentPause(id: "${ENVIRONMENT_ID}") {
-            id
-          }
-        }
-      `
-    }, { headers });
+    const response = await axios({
+      method: 'post',
+      url: 'https://backboard.railway.app/graphql/v2',
+      headers,
+      data: {
+        query: `mutation { environmentPause(id: "${ENVIRONMENT_ID}") { id } }`
+      }
+    });
 
-    console.log('✅ Ambiente pausado');
+    console.log('✅ Ambiente pausado:', response.data);
   } catch (e) {
-    console.error('❌ Erro ao pausar ambiente:', e.message);
+    console.error('❌ Erro ao pausar ambiente:', e.response?.data || e.message);
   }
 }
 
 async function resumeEnv() {
   try {
-    await axios.post('https://backboard.railway.app/graphql/v2', {
-      query: `
-        mutation {
-          environmentResume(id: "${ENVIRONMENT_ID}") {
-            id
-          }
-        }
-      `
-    }, { headers });
+    const response = await axios({
+      method: 'post',
+      url: 'https://backboard.railway.app/graphql/v2',
+      headers,
+      data: {
+        query: `mutation { environmentResume(id: "${ENVIRONMENT_ID}") { id } }`
+      }
+    });
 
-    console.log('✅ Ambiente retomado');
+    console.log('✅ Ambiente retomado:', response.data);
   } catch (e) {
-    console.error('❌ Erro ao retomar ambiente:', e.message);
+    console.error('❌ Erro ao retomar ambiente:', e.response?.data || e.message);
   }
 }
 
